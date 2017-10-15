@@ -16,3 +16,9 @@ NodePoint.prototype.draw = function(context)
   context.fill();
 }
 
+NodePoint.prototype.move = function()
+{
+  this.x = (this.x + Math.floor(Math.random() * 5) - 2) % WIDTH;
+  this.y = (this.y + Math.floor(Math.random() * 5) - 2) % HEIGHT;
+}
+
