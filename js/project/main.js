@@ -33,11 +33,23 @@ window.onload = function() {
         links.push(linkNode);
       }
       
-      for (var _node of arr)
+      canvas.addEventListener('enterframe', mainLoop);
+      
+      /*
+      canvas.addEventListener('enterframe', function()
       {
-        console.log(_node);
-        _node.draw(surface.context);
-      }
+        surface.context.clearRect(0, 0, 320, 320);
+        for (var _node of arr)
+        {
+          _node.move();
+          _node.draw(surface.context);
+        }
+        for (var _line of links)
+        {
+          _line.draw(surface.context);
+        }
+      });
+      */
       
       core.rootScene.addChild(canvas);
       
@@ -45,4 +57,7 @@ window.onload = function() {
   core.start();
 };
 
-
+function mainLoop()
+{
+  console.log("main loop");
+}
