@@ -1,5 +1,9 @@
 enchant();
 
+var nodes = [];
+var links = [];
+var context;
+
 window.onload = function() {
   console.log("hello!");
   var core = new Core(DEFS.WIDTH, DEFS.HEIGHT);
@@ -15,19 +19,17 @@ window.onload = function() {
       
       context = surface.context;
       
-      var arr = [];
       for (var i = 0; i < 10; i++)
       {
         var node = new NodePoint();
         //node.draw(surface.context);
-        arr.push(node);
+        nodes.push(node);
       }
       
-      var links = [];
       for (var i = 0; i < 10; i++)
       {
-        var p = arr[i];
-        var q = arr[(i + 1) % 10];
+        var p = nodes[i];
+        var q = nodes[(i + 1) % 10];
         var linkNode = new NodeLink(p, q);
         linkNode.draw(surface.context);
         links.push(linkNode);
@@ -38,7 +40,7 @@ window.onload = function() {
       /*
       canvas.addEventListener('enterframe', function()
       {
-        surface.context.clearRect(0, 0, 320, 320);
+        surface.context.clearRect(0, 0, DEFS.WIDTH, DEFS.HEIGHT);
         for (var _node of arr)
         {
           _node.move();
@@ -59,5 +61,15 @@ window.onload = function() {
 
 function mainLoop()
 {
-  console.log("main loop");
+  context.clearRect(0, 0, DEFS.WIDTH, DEFS.HEIGHT);
+  for (var node of nodes)
+  {
+    node.move();
+    node.draw(context);
+  }
+  for (var line of links)
+  {
+    line.draw(context);
+  }
 }
+
