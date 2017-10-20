@@ -2,14 +2,14 @@ enchant();
 
 window.onload = function() {
   console.log("hello!");
-  var core = new Core(320, 320);
-  core.preload('enchant.png');
+  var core = new Core(DEFS.WIDTH, DEFS.HEIGHT);
+  //core.preload('enchant.png');
   core.onload = function() {
-      var canvas = new Sprite(320, 320);
+      var canvas = new Sprite(DEFS.WIDTH, DEFS.HEIGHT);
       
       canvas.backgroundColor = "rgba(200, 255, 200, 0.5)";
       
-      var surface = new Surface(320, 320);
+      var surface = new Surface(DEFS.WIDTH, DEFS.HEIGHT);
       
       canvas.image = surface;
       

@@ -1,0 +1,5 @@
+var DEFS = DEFS || {};
+
+DEFS.WIDTH = 320;
+DEFS.HEIGHT = 320;
+
