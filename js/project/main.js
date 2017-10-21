@@ -3,11 +3,11 @@ enchant();
 var nodes = [];
 var links = [];
 var context;
+var core;
 
 window.onload = function() {
   console.log("hello!");
-  var core = new Core(DEFS.WIDTH, DEFS.HEIGHT);
-  //core.preload('enchant.png');
+  init();
   core.onload = function() {
       var canvas = new Sprite(DEFS.WIDTH, DEFS.HEIGHT);
       
@@ -58,6 +58,12 @@ window.onload = function() {
   };
   core.start();
 };
+
+function init()
+{
+  core = new Core(DEFS.WIDTH, DEFS.HEIGHT);
+  //core.preload('enchant.png');
+}
 
 function mainLoop()
 {
