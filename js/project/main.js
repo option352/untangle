@@ -4,6 +4,7 @@ var nodes = [];
 var links = [];
 var context;
 var core;
+var nodeManager = new NodeManager();
 
 window.onload = function() {
   console.log("hello!");
@@ -21,15 +22,16 @@ window.onload = function() {
       
       for (var i = 0; i < 10; i++)
       {
-        var node = new NodePoint();
+        nodeManager.create();
+        //var node = new NodePoint();
         //node.draw(surface.context);
-        nodes.push(node);
+        //nodes.push(node);
       }
       
       for (var i = 0; i < 10; i++)
       {
-        var p = nodes[i];
-        var q = nodes[(i + 1) % 10];
+        var p = nodeManager.nodes[i];
+        var q = nodeManager.nodes[(i + 1) % 10];
         var linkNode = new NodeLink(p, q);
         linkNode.draw(surface.context);
         links.push(linkNode);
@@ -68,11 +70,7 @@ function init()
 function mainLoop()
 {
   context.clearRect(0, 0, DEFS.WIDTH, DEFS.HEIGHT);
-  for (var node of nodes)
-  {
-    node.move();
-    node.draw(context);
-  }
+  nodeManager.update(context);
   for (var line of links)
   {
     line.draw(context);

@@ -1,17 +1,28 @@
-var NodeManager = function()
+function NodeManager()
 {
-  this.nodes = [];
+  if (NodeManager.instance)
+  {
+    return NodeManager.instance;
+  }
+  
+  NodeManager.instance = this;
+  
+  var nodes = [];
+  
+  this.create = function()
+  {
+    nodes.push(new NodePoint());
+  };
+  
+  this.update = function(context)
+  {
+    for (var node of nodes)
+    {
+      node.move();
+      node.draw(context);
+    }
+  };
 };
-
-NodeManager.prototype.create = function()
-{
-};
-
-NodeManager.prototype.update = function()
-{
-};
-
-
 
 var NodePoint = function()
 {
