@@ -18,11 +18,13 @@ window.onload = function()
     game.rootScene.backgroundColor = "#7ecef4";
     game.rootScene.addEventListener(Event.ENTER_FRAME, function()
     {
+      kuma.frame = kuma.frame < 2 ? kuma.frame + 1 : 0;
       kuma.x += speed;
     });
     game.rootScene.addEventListener(Event.TOUCH_START, function(e)
     {
       speed = e.x > kuma.x ? 1 : -1;
+      kuma.scaleX = speed;
     });
   }
   
