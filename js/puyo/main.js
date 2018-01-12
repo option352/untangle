@@ -26,8 +26,8 @@ window.onload = function()
         if ( j == 0 || j == MAX_COL - 1 || i == MAX_ROW - 1)
           temp_array[j] = 0;
         else
-          //temp_array[j] = -1;
-          temp_array[j] = Math.floor(Math.random() * 4 + 1);
+          temp_array[j] = -1;
+          //temp_array[j] = Math.floor(Math.random() * 4 + 1);
       }
       field[i] = temp_array;
     }
@@ -36,19 +36,47 @@ window.onload = function()
     map.loadData(field);
     scene.addChild(map);
     
-    //var pair = createPair(game, map, field);
-    //scene.addChild(pair);
+    var pair = createPair(game, map, field);
+    scene.addChild(pair);
     
-    scene.addEventListener(Event.TOUCH_START, function()
+    scene.addEventListener(Event.ENTER_FRAME, function()
     {
-      var target_row = Math.floor(Math.random() * (MAX_ROW - 1) + 1);
-      var target_col = Math.floor(Math.random() * (MAX_COL - 2) + 1);
-      var count = countPuyos(target_row, target_col, field);
-      console.log(target_row, target_col, count);
-      if (count >= 4)
+      console.log(pair.isFall);
+      if(!pair.isFall)
       {
-        deletePuyos(target_row, target_col, field)
+        scene.removeChild(pair);
         map.loadData(field);
+        if(field[2][3] != -1)
+        {
+          game.stop();
+          console.log("fin");
+        }
+        else
+        {
+          console.log("b", pair.isFall);
+          pair = createPair(game, map, field);
+          scene.addChild(pair);
+          console.log("c", pair.isFall);
+        }
+        /*
+        freeFall(field);
+        chain(field);
+        map.loadData(field);
+        console.log("a", field[2][3]);
+        scene.removeChild(pair);
+        if(field[2][3] != -1)
+        {
+          game.stop();
+          console.log("fin");
+        }
+        else
+        {
+          console.log("b", pair.isFall);
+          pair = createPair(game, map, field);
+          scene.addChild(pair);
+          console.log("c", pair.isFall);
+        }
+        */
       }
     });
   }
@@ -129,6 +157,7 @@ function createPair(game, map, field)
         field[(this.y+p0.y)/CELL_SIZE][(this.y+p0.x)/CELL_SIZE] = p0.frame;
         field[(this.y+p1.y)/CELL_SIZE][(this.y+p1.x)/CELL_SIZE] = p1.frame;
         pair.isFall = false;
+        
       }
     }
     
@@ -171,5 +200,41 @@ function deletePuyos(row, col, field)
     deletePuyos(row, col + 1, field);
 }
 
+function freeFall(field)
+{
+  var c = 0;
+  for (var i=0; i<MAX_COL; i++)
+  {
+    var spaces = 0;
+    for (var j=MAX_ROW - 1; j >= 0; j--)
+    {
+      if (field[j][i] == -1)
+        spaces++;
+      else if(spaces >= 1)
+      {
+        field[j+spaces][i] = field[j][i];
+        field[j][i] = -1;
+        c++;
+      }
+    }
+  }
+  return c;
+}
 
+function chain(field)
+{
+  for (var i=0; i<MAX_ROW; i++)
+  {
+    for (var j=0; j < MAX_COL; j--)
+    {
+      var n = 0;
+      if (field[i][j]>=1 && countPuyos(i, j, field) >= 4)
+      {
+        deletePuyos(i, j, field);
+      }
+    }
+  }
+  if (freeFall(field) >= 1)
+    chain(field);
+}
 
