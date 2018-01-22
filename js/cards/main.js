@@ -8,37 +8,9 @@ window.onload = function()
   
   game.onload = function()
   {
-    var mainScene = function()
-    {
-      var scene = new Scene();
-      scene.backgroundColor = "#ffcccc";
-      
-      var card = new Sprite(60, 90);
-      card.image = game.assets['./img/cards/trump.gif'];
-      card.x = 100;
-      card.y = 120;
-      
-      scene.addChild(card);
-      scene.addEventListener(Event.TOUCH_START, function()
-      {
-        card.frame += 1;
-      });
-      /*
-      game.rootScene.addEventListener(Event.TOUCH_START, function(e)
-      {
-        speed = e.x > kuma.x ? 1 : -1;
-        kuma.scaleX = speed;
-      });
-      */
-      return scene;
-    }
-    
-    var tempScene = function()
-    {
-    }
-    
-
-    game.replaceScene(mainScene());
+    game.replaceScene(scenes.titleScene());
+    cards.init();
+    console.log(cards.deck);
   }
   
   game.start();
