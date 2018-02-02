@@ -22,13 +22,6 @@ var Block = Class.create(Group, {
     }
   },
   
-  /*
-  ontouchstart:function()
-  {
-    this.checkCell();
-  },
-  */
-  
   checkCell:function()
   {
     var length = this.cells.length;
@@ -45,6 +38,21 @@ var Block = Class.create(Group, {
         this.cells[i].setOverlap(false);
       }
     }
+  },
+  
+  //ブロック内で確定している数字リスト
+  getUsedSymbols:function()
+  {
+    var ret = [];
+    var length = this.cells.length;
+    for (var i = 0; i < length; i++)
+    {
+      if (this.cells[i].symbol != 0)
+      {
+        ret.push(this.cells[i].symbol - 1);
+      }
+    }
+    return ret;
   }
   
 });

@@ -106,18 +106,17 @@ var Cell = Class.create(Group, {
     this.symbolLabel.color = bool ? STATICS.CELL_OVERLAP_COLOR : STATICS.CELL_DEFAULT_COLOR;
   },
   
+  //このセルが所属するブロックにある数字を除外
   checkOverlap: function()
   {
+    if (this.probs == undefined) return;
     var length = this.parentBlocks.length;
     for (var i = 0; i < length; i++)
     {
       var usedSymbols = this.parentBlocks[i].getUsedSymbols();
-      if(this.probs !== undefined)
+      for (var j = 0; j < usedSymbols.length; j++)
       {
-        for (var j = 0; j < usedSymbols.length; j++)
-        {
-          
-        }
+        this.probs.removeSymbol(usedSymbols[j]);
       }
     }
   }
@@ -133,14 +132,37 @@ var ProbLabels = Class.create(Group, {
     for (var i = 0; i < 9; i++)
     {
       var probSymbol = new Label( i + 1 );
-      probSymbol.x = Math.floor(i / 3) * 20 + 6;
-      probSymbol.y = Math.floor(i % 3) * 20 + 2;
+      probSymbol.x = Math.floor(i % 3) * 20 + 6;
+      probSymbol.y = Math.floor(i / 3) * 20 + 2;
       probSymbol.font = "16px 'メイリオ'";
       
       this.symbols.push(probSymbol);
       this.addChild(probSymbol);
     }
+  },
+  
+  //可能性リストから数字を除外
+  removeSymbol: function(symbol)
+  {
+    if (this.symbols[symbol] != undefined)
+    {
+      this.removeChild(this.symbols[symbol]);
+      this.symbols[symbol] = undefined;
+    }
+  },
+  
+  //可能性リストの残数を取得
+  getProbNums: function()
+  {
+    var ret = 0;
+    for (var i = 0; i < 9; i++)
+    {
+      if(this.symbols[i] != undefined) ret++;
+    }
+    return ret;
   }
+  
+  
 });
 
 //実行中の関数（無名関数）を削除

@@ -65,6 +65,13 @@ window.onload = function()
           cells[base + 20]
           ]);
       }
+      
+      /*
+      for (var i = 0; i < cells.length; i++)
+      {
+        cells[i].checkOverlap();
+      }
+      */
     }
     
     var targetCell = -1;
@@ -75,6 +82,7 @@ window.onload = function()
         cells[targetCell].bg.backgroundColor = "rgba(255, 255, 255, 128)";
       targetCell = (targetCell + 1) % cells.length;
       cells[targetCell].bg.backgroundColor = "rgba(255, 180, 255, 128)";
+      cells[targetCell].checkOverlap();
     }
   }
   
