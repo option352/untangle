@@ -14,3 +14,5 @@ STATICS.DEFAULT_SYMBOL =
 ]
 
 
+//http://algorithm.main.jp/index.php
+
