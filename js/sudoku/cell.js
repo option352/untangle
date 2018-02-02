@@ -119,6 +119,34 @@ var Cell = Class.create(Group, {
         this.probs.removeSymbol(usedSymbols[j]);
       }
     }
+  },
+  
+  //セルのシンボルを更新
+  setSymbol:function(symbol)
+  {
+    if (this.probs == undefined) return;
+    this.removeChild(this.probs);
+    this.probs = undefined;
+    this.symbol = symbol;
+    this.updateLabel();
+    var length = this.parentBlocks.length;
+    for (var i = 0; i < length; i++)
+    {
+      this.parentBlocks[i].updateProbs();
+    }
+  },
+  
+  //このセルに入る可能性のある数字リスト
+  getProbs:function()
+  {
+    if (this.probs == undefined) return [];
+    return this.probs.getProbs();
+  },
+  
+  //セルの背景色を変更
+  changeBG:function(color)
+  {
+    this.bg.backgroundColor = color;
   }
   
   
@@ -151,15 +179,21 @@ var ProbLabels = Class.create(Group, {
     }
   },
   
+  //可能性リストを取得
+  getProbs: function()
+  {
+    var ret = [];
+    for (var i = 0; i < 9; i++)
+    {
+      if(this.symbols[i] != undefined) ret.push(i+1);
+    }
+    return ret;
+  },
+  
   //可能性リストの残数を取得
   getProbNums: function()
   {
-    var ret = 0;
-    for (var i = 0; i < 9; i++)
-    {
-      if(this.symbols[i] != undefined) ret++;
-    }
-    return ret;
+    return this.getProbs().length;
   }
   
   

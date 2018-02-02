@@ -10,6 +10,7 @@ window.onload = function()
   var HEIGHT = 9;
   
   var cells = [];
+  var blocks = [];
   
   game.onload = function()
   {
@@ -37,7 +38,7 @@ window.onload = function()
       {
         row.push(cells[i * 9 + j]);
       }
-      new Block(row);
+      blocks.push(new Block(row));
     }
     for (var i = 0; i < WIDTH; i++)
     {
@@ -46,43 +47,44 @@ window.onload = function()
       {
         col.push(cells[i + j * 9]);
       }
-      new Block(col);
+      blocks.push(new Block(col));
     }
     for (var i = 0; i < 3; i++)
     {
       for (var j = 0; j < 3; j++)
       {
         var base = i * 3 + j * 3 * 9;
-        new Block([
-          cells[base],
-          cells[base + 1], 
-          cells[base + 2], 
-          cells[base + 9], 
-          cells[base + 10], 
-          cells[base + 11], 
-          cells[base + 18], 
-          cells[base + 19], 
-          cells[base + 20]
-          ]);
+        blocks.push(
+          new Block([
+            cells[base],
+            cells[base + 1], 
+            cells[base + 2], 
+            cells[base + 9], 
+            cells[base + 10], 
+            cells[base + 11], 
+            cells[base + 18], 
+            cells[base + 19], 
+            cells[base + 20]
+          ])
+        );
       }
       
-      /*
-      for (var i = 0; i < cells.length; i++)
-      {
-        cells[i].checkOverlap();
-      }
-      */
     }
     
-    var targetCell = -1;
+    for (var i = 0; i < cells.length; i++)
+    {
+      cells[i].checkOverlap();
+    }
+    
+    var targetBlock = -1;
     
     game.onenterframe = function()
     {
-      if(targetCell >= 0)
-        cells[targetCell].bg.backgroundColor = "rgba(255, 255, 255, 128)";
-      targetCell = (targetCell + 1) % cells.length;
-      cells[targetCell].bg.backgroundColor = "rgba(255, 180, 255, 128)";
-      cells[targetCell].checkOverlap();
+      if(targetBlock >= 0)
+        blocks[targetBlock].changeBG("rgba(255, 255, 255, 0)");
+      targetBlock = (targetBlock + 1) % blocks.length;
+      blocks[targetBlock].changeBG("rgba(255, 180, 255, 128)");
+      blocks[targetBlock].collectOnlySymbol();
     }
   }
   

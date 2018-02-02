@@ -40,6 +40,40 @@ var Block = Class.create(Group, {
     }
   },
   
+  //入る箇所が1つしかないシンボルを確定
+  collectOnlySymbol:function()
+  {
+    for (var i = 1; i <= 9; i++)
+    {
+      var cells = this.checkOnlySymbol(i);
+      if (cells.length == 1)
+      {
+        cells[0].setSymbol(i);
+      }
+    }
+  },
+  
+  //特定の数字が入るセルリスト
+  checkOnlySymbol:function(symbol)
+  {
+    var ret = [];
+    var length = this.cells.length;
+    for (var i = 0; i < length; i++)
+    {
+      var probs = this.cells[i].getProbs();
+      for (var j = 0; j < probs.length; j++)
+      {
+        if(probs[i] == symbol)
+        {
+          ret.push(this.cells[i]);
+        }
+      }
+    }
+    
+    // 重複を削除したリスト
+    return ret.filter(function(x, i, self){ return self.indexOf(x) === i })
+  },
+  
   //ブロック内で確定している数字リスト
   getUsedSymbols:function()
   {
@@ -53,6 +87,26 @@ var Block = Class.create(Group, {
       }
     }
     return ret;
+  },
+  
+  //ブロック内のセルの色を変更
+  //CPUが解く際に表示
+  changeBG:function(color)
+  {
+    var length = this.cells.length;
+    for (var i = 0; i < length; i++)
+    {
+      this.cells[i].changeBG(color);
+    }
+  },
+  
+  updateProbs:function()
+  {
+    var length = this.cells.length;
+    for (var i = 0; i < length; i++)
+    {
+      this.cells[i].checkOverlap();
+    }
   }
   
 });
