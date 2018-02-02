@@ -31,7 +31,6 @@ var Block = Class.create(Group, {
   
   checkCell:function()
   {
-    console.log("check block cell", this);
     var length = this.cells.length;
     for (var i = 0; i < length; i++)
     {

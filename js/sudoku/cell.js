@@ -33,6 +33,12 @@ var Cell = Class.create(Group, {
     this.updateLabel();
     this.addChild( this.symbolLabel );
     
+    if(symbol == 0)
+    {
+      this.probs = new ProbLabels();
+      this.addChild(this.probs);
+    }
+    
     this.parentBlocks = [];
   },
   
@@ -50,10 +56,13 @@ var Cell = Class.create(Group, {
       this.setOverlap(false);
     else
     {
-      var length = this.parentBlocks.length;
-      for (var i = 0; i < length; i++)
-      {
-        this.parentBlocks[i].checkCell();
+      if(this.parentBlocks)
+      {//初期化時にブロック登録がなされていない例外処理
+        var length = this.parentBlocks.length;
+        for (var i = 0; i < length; i++)
+        {
+          this.parentBlocks[i].checkCell();
+        }
       }
     }
   },
@@ -91,13 +100,47 @@ var Cell = Class.create(Group, {
   
   setOverlap:function(bool)
   {
-    console.log("overlap", bool)
     //重複時の色変更処理
     //this.bg.backgroundColor = bool ? STATICS.CELL_OVERLAP_COLOR : STATICS.CELL_DEFAULT_COLOR;
+    //this.bg.backgroundColor = bool ? "rgba(255, 180, 180, 128)" : "rgba(255, 255, 255, 0)";
     this.symbolLabel.color = bool ? STATICS.CELL_OVERLAP_COLOR : STATICS.CELL_DEFAULT_COLOR;
-    console.log("overlap", this.symbolLabel.color)
+  },
+  
+  checkOverlap: function()
+  {
+    var length = this.parentBlocks.length;
+    for (var i = 0; i < length; i++)
+    {
+      var usedSymbols = this.parentBlocks[i].getUsedSymbols();
+      if(this.probs !== undefined)
+      {
+        for (var j = 0; j < usedSymbols.length; j++)
+        {
+          
+        }
+      }
+    }
   }
   
+  
+});
+
+var ProbLabels = Class.create(Group, {
+  initialize: function(game)
+  {
+    enchant.Group.call(this, STATICS.CELL_WIDTH, STATICS.CELL_HEIGHT);
+    this.symbols = [];
+    for (var i = 0; i < 9; i++)
+    {
+      var probSymbol = new Label( i + 1 );
+      probSymbol.x = Math.floor(i / 3) * 20 + 6;
+      probSymbol.y = Math.floor(i % 3) * 20 + 2;
+      probSymbol.font = "16px 'メイリオ'";
+      
+      this.symbols.push(probSymbol);
+      this.addChild(probSymbol);
+    }
+  }
 });
 
 //実行中の関数（無名関数）を削除
