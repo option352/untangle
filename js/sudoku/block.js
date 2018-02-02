@@ -63,7 +63,7 @@ var Block = Class.create(Group, {
       var probs = this.cells[i].getProbs();
       for (var j = 0; j < probs.length; j++)
       {
-        if(probs[i] == symbol)
+        if(probs[j] == symbol)
         {
           ret.push(this.cells[i]);
         }
