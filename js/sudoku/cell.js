@@ -5,8 +5,10 @@ var STATICS = STATICS || {};
 STATICS.CELL_IMAGE  = "./img/sudoku/flame.png";
 STATICS.CELL_WIDTH  = 64;
 STATICS.CELL_HEIGHT = 64;
-STATICS.CELL_DEFAULT_COLOR = "#FFFFFF00";
-STATICS.CELL_OVERLAP_COLOR = "#CC444488";
+//STATICS.CELL_DEFAULT_COLOR = "#88888888";
+//STATICS.CELL_OVERLAP_COLOR = "#CC444488";
+STATICS.CELL_DEFAULT_COLOR = "black";
+STATICS.CELL_OVERLAP_COLOR = "red";
 
 var Cell = Class.create(Group, {
 
@@ -18,7 +20,7 @@ var Cell = Class.create(Group, {
     sprite.image = game.assets[STATICS.CELL_IMAGE];
     
     this.bg = sprite;
-    this.setOverlap(false);
+    //this.setOverlap(false);
     this.addChild(sprite);
     
     this.symbol = symbol;
@@ -26,10 +28,12 @@ var Cell = Class.create(Group, {
     this.symbolLabel = new Label();
     this.symbolLabel.x = 20 + 6;
     this.symbolLabel.y = 20 + 0;
-    this.symbolLabel.font = "18px 'ÉÅÉCÉäÉI'";
+    this.symbolLabel.font = "24px '„É°„Ç§„É™„Ç™'";
     
     this.updateLabel();
     this.addChild( this.symbolLabel );
+    
+    this.parentBlocks = [];
   },
   
   ontouchstart: function()
@@ -44,20 +48,58 @@ var Cell = Class.create(Group, {
     this.symbolLabel.visible = this.symbol != 0;
     if(this.symbol == 0)
       this.setOverlap(false);
+    else
+    {
+      var length = this.parentBlocks.length;
+      for (var i = 0; i < length; i++)
+      {
+        this.parentBlocks[i].checkCell();
+      }
+    }
+  },
+  
+  addBlock: function(block)
+  {
+    var length = this.parentBlocks.length;
+    for (var i = 0; i < length; i++)
+    {
+      if (this.parentBlocks[i] == block) return false;
+    }
+    this.parentBlocks.push(block);
+    return true;
+  },
+  
+  removeBlock: function(block)
+  {
+    var length = this.parentBlocks.length;
+    for (var i = 0; i < length; i++)
+    {
+      if (this.parentBlocks[i] == block)
+      {
+        this.parentBlocks.splice(i, 1);
+        return true;
+      }
+    }
+    return false;
   },
   
   isOverlap:function()
   {
-    return this.bg.backgroundColor == STATICS.CELL_OVERLAP_COLOR;
+    //return this.bg.backgroundColor == STATICS.CELL_OVERLAP_COLOR;
+    return this.symbolLabel.color == STATICS.CELL_OVERLAP_COLOR;
   },
   
   setOverlap:function(bool)
   {
-    this.bg.backgroundColor = bool ? STATICS.CELL_OVERLAP_COLOR : STATICS.CELL_DEFAULT_COLOR;
+    console.log("overlap", bool)
+    //ÈáçË§áÊôÇ„ÅÆËâ≤Â§âÊõ¥Âá¶ÁêÜ
+    //this.bg.backgroundColor = bool ? STATICS.CELL_OVERLAP_COLOR : STATICS.CELL_DEFAULT_COLOR;
+    this.symbolLabel.color = bool ? STATICS.CELL_OVERLAP_COLOR : STATICS.CELL_DEFAULT_COLOR;
+    console.log("overlap", this.symbolLabel.color)
   }
   
 });
 
-//é¿çsíÜÇÃä÷êîÅiñ≥ñºä÷êîÅjÇçÌèú
+//ÂÆüË°å‰∏≠„ÅÆÈñ¢Êï∞ÔºàÁÑ°ÂêçÈñ¢Êï∞Ôºâ„ÇíÂâäÈô§
 //this.removeEventListener("touchstart", arguments.callee);
 

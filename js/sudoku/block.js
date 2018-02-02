@@ -14,7 +14,12 @@ var Block = Class.create(Group, {
 
   initialize: function(cells)
   {
-    this.cells = cells;
+    this.cells = cells || [];
+    var cellLength = this.cells.length;
+    for(var i = 0; i < cellLength; i++)
+    {
+      this.cells[i].addBlock(this);
+    }
   },
   
   /*
@@ -26,13 +31,13 @@ var Block = Class.create(Group, {
   
   checkCell:function()
   {
+    console.log("check block cell", this);
     var length = this.cells.length;
     for (var i = 0; i < length; i++)
     {
-      for (var j = 0; i < length; j++)
+      for (var j = 0; j < length; j++)
       {
         if (i == j || this.cells[i].symbol == 0) continue;
-        console.log(this.cells[i], this.cells[j]);
         if (this.cells[i].symbol == this.cells[j].symbol)
         {
           this.cells[i].setOverlap(true);

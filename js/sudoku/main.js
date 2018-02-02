@@ -11,8 +11,6 @@ window.onload = function()
   
   var cells = [];
   
-  //var block;
-  
   game.onload = function()
   {
     for (var i = 0; i < WIDTH; i++)
@@ -30,7 +28,8 @@ window.onload = function()
       }
     }
     
-    //block = new Block([cells[0], cells[1], cells[2], cells[9], cells[10], cells[11], cells[18], cells[19], cells[20]]);
+    new Block([cells[0], cells[1], cells[2], cells[9], cells[10], cells[11], cells[18], cells[19], cells[20]]);
+    new Block([cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6], cells[7], cells[8]]);
     
     /*
     game.rootScene.addEventListener("touchstart", function()
