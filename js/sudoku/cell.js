@@ -125,8 +125,17 @@ var Cell = Class.create(Group, {
   setSymbol:function(symbol)
   {
     if (this.probs == undefined) return;
-    this.removeChild(this.probs);
-    this.probs = undefined;
+    if (symbol == 0)
+    {
+      this.removeChild(this.probs);
+      this.probs = new ProbLabels();
+      this.addChild(this.probs);
+    }
+    else
+    {
+      this.removeChild(this.probs);
+      this.probs.collectSymbol(symbol);
+    }
     this.symbol = symbol;
     this.updateLabel();
     var length = this.parentBlocks.length;
@@ -169,6 +178,17 @@ var ProbLabels = Class.create(Group, {
     }
   },
   
+  //
+  collectSymbol: function(symbol)
+  {
+    var length = this.symbols.length;
+    for (var i = 0 ; i < length; i++)
+    {
+      if (i == symbol) continue;
+      this.removeSymbol(i);
+    }
+  },
+  
   //可能性リストから数字を除外
   removeSymbol: function(symbol)
   {
@@ -194,8 +214,7 @@ var ProbLabels = Class.create(Group, {
   getProbNums: function()
   {
     return this.getProbs().length;
-  }
-  
+  },
   
 });
 
