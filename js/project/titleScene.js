@@ -18,26 +18,9 @@ var titleScene = Class.create(Scene, {
     
     for (var i = 0; i < 6; i++)
     {
-      var point = new Sprite(32, 32);
+      var point = new Vertex();
       point.x = Math.floor(Math.random() * 700) + 100;
       point.y = Math.floor(Math.random() * 700) + 100;
-      //point.moveTo(100 + 32 * i, 100);
-      point.rotation = i * 45;//Math.floor(Math.random() * 360);
-      
-      //円の描画処理
-      var surf = new Surface(32, 32);
-      surf.context.beginPath();
-      surf.context.fillStyle = "rgb(0, 0, 0)";
-      surf.context.arc(16, 16, 16, 0, Math.PI * 2, true);
-      surf.context.fill();
-      surf.context.beginPath();
-      surf.context.fillStyle = "rgb(180, 255, 255)";
-      surf.context.arc(16, 16, 14, 0, Math.PI * 1, true);
-      surf.context.fill();
-      
-      
-      //Spriteに描画した円を登録
-      point.image = surf;
       
       var len = this.nodeArray.length
       for (var j = 0; j < len; j++)
