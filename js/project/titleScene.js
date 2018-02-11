@@ -25,7 +25,7 @@ var titleScene = Class.create(Scene, {
       var len = this.nodeArray.length
       for (var j = 0; j < len; j++)
       {
-        allLines.push([j, len]);
+        allLines.push(new LineSegment(this.nodeArray[j], point));
       }
       
       this.nodeArray.push(point);
@@ -55,16 +55,7 @@ var titleScene = Class.create(Scene, {
     context.clearRect(0, 0, this.lineSurface.width, this.lineSurface.height);
     for (var i = 0; i < this.lineArray.length; i++)
     {
-      context.beginPath();
-      var pair = this.lineArray[i];
-      var startPoint = this.nodeArray[pair[0]];
-      var endPoint = this.nodeArray[pair[1]];
-      context.moveTo(startPoint.x + 16, startPoint.y + 16);
-      context.lineTo(endPoint.x + 16, endPoint.y + 16);
-      context.closePath();
-      context.lineWidth = 3;
-      context.strokeStyle = "rgb(0, 128, 0)";
-      context.stroke();
+      this.lineArray[i].render(context);
     }
   }
 });

@@ -1,14 +1,30 @@
-var NodeLink = function(_p, _q)
-{
-  this.p = _p;
-  this.q = _q;
-}
+enchant();
 
-NodeLink.prototype.draw = function(context)
-{
-  context.beginPath();
-  context.moveTo(this.p.x, this.p.y);
-  context.lineTo(this.q.x, this.q.y);
-  context.stroke();
-}
+var DEFS = DEFS || {};
+DEFS.LINE = DEFS.LINE || {};
+
+DEFS.LINE.DEFAULT_COLOR = "rgb(0, 128, 0)";
+DEFS.LINE.DEFAULT_THICK = 3;
+
+var LineSegment = Class.create({
+  initialize:function(p, q)
+  {
+    this.startPoint = p;
+    this.endPoint = q;
+  },
+  
+  render:function(context)
+  {
+    var radius = DEFS.VERTEX.RADIUS;
+    context.beginPath();
+    context.moveTo(this.startPoint.x + radius, this.startPoint.y + radius);
+    context.lineTo(this.endPoint.x + radius, this.endPoint.y + radius);
+    context.closePath();
+    context.lineWidth = DEFS.LINE.DEFAULT_THICK;
+    context.strokeStyle = DEFS.LINE.DEFAULT_COLOR;
+    context.stroke();
+    
+  }
+});
+
 
