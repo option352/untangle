@@ -19,7 +19,7 @@ var Vertex = Class.create(Sprite, {
     
     var context = this.surface.context;
     var radius = DEFS.VERTEX.RADIUS;
-    //‰~‚Ì•`‰æˆ—
+    //å††ã®æç”»å‡¦ç†
     context.beginPath();
     context.fillStyle = DEFS.VERTEX.OUTERCOLOR;
     context.arc(radius, radius, radius, 0, Math.PI * 2, true);
@@ -29,7 +29,7 @@ var Vertex = Class.create(Sprite, {
     context.arc(radius, radius, radius - 2, 0, Math.PI * 2, true);
     context.fill();
     
-    //Sprite‚É•`‰æ‚µ‚½‰~‚ğ“o˜^
+    //Spriteã«æç”»ã—ãŸå††ã‚’ç™»éŒ²
     this.image = this.surface;
     
   }
