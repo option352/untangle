@@ -1,16 +1,14 @@
 enchant();
 
-var createScene = Class.create(Scene, {
-  initialize: function()
+var gameScene = Class.create(Scene, {
+  initialize: function(nodes, lines)
   {
     enchant.Scene.call(this);
-    this.backgroundColor = "rgb(180, 180, 255)";
+    enchant.Core.instance.fps = 24;
+    this.backgroundColor = "rgb(255, 180, 255)";
     
-    this.nodeArray = [];
-    this.lineArray = [];
-    
-    var allLines = [];
-    this.unselectLines = [];
+    this.nodeArray = nodes;
+    this.lineArray = lines;
     
     this.lineLayer = new Sprite(960, 960);
     this.lineSurface = new Surface(960, 960);
@@ -18,33 +16,18 @@ var createScene = Class.create(Scene, {
     this.lineLayer.image = this.lineSurface;
     this.addChild(this.lineLayer);
     
-    for (var i = 0; i < 15; i++)
+    var length = this.nodeArray.length;
+    var center = 480;
+    var r = 240;
+    
+    for (var i = 0; i < length; i++)
     {
-      var point = new Vertex();
-      var tooNear = false;
-      do
-      {
-        point.x = (Math.floor(Math.random() * (960 - 32)));
-        point.y = (Math.floor(Math.random() * (960 - 32)));
-        tooNear = false;
-        for (var j = 0; j < this.nodeArray.length; j++)
-        {
-          tooNear = tooNear || new LineSegment(this.nodeArray[j], point).getVector().force() < 32;
-        }
-      }while(tooNear);
-      
-      var len = this.nodeArray.length
-      for (var j = 0; j < len; j++)
-      {
-        allLines.push(new LineSegment(this.nodeArray[j], point));
-      }
-      
-      this.nodeArray.push(point);
+      var point = this.nodeArray[i];
+      point.x = center + r * Math.cos(Math.PI * 2 * i / length);
+      point.y = center + r * Math.sin(Math.PI * 2 * i / length);
       this.addChild(point);
-      
     }
     
-    this.unselectLines = this.unselectLines.concat(allLines);
     this.render();
     
     this.scale = 4;
@@ -81,12 +64,7 @@ var createScene = Class.create(Scene, {
   
   onenterframe:function(e)
   {
-    if(this.unselectLines == 0)
-    {
-      console.log("change scene");
-      enchant.Core.instance.replaceScene(new gameScene(this.nodeArray, this.lineArray));
-    }
-    this.addLines();
+    this.checkCross();
     this.render();
   },
   
@@ -97,28 +75,6 @@ var createScene = Class.create(Scene, {
     for (var i = 0; i < this.lineArray.length; i++)
     {
       this.lineArray[i].render(context);
-    }
-  },
-  
-  addLines:function()
-  {
-    if (this.unselectLines == 0)
-    {
-      this.backgroundColor = "rgb(180, 180, 180)";
-      return;
-    }
-    var line;
-    do
-    {
-      var index = Math.random() * this.unselectLines.length | 0;
-      line = this.unselectLines.splice(index, 1)[0];
-      if(this.checkCrossLine(line))
-        line = undefined;
-    }while(line == undefined && this.unselectLines.length > 0);
-    if(line != undefined)
-    {
-      this.lineArray.push(line);
-      this.checkCross();
     }
   },
   
