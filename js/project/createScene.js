@@ -47,6 +47,36 @@ var createScene = Class.create(Scene, {
     this.unselectLines = this.unselectLines.concat(allLines);
     this.render();
     
+    this.scale = 4;
+    this.touchX = 0;
+    this.touchY = 0;
+  },
+  
+  ontouchstart:function(e)
+  {
+    this.touchOrigin = new Vector2d(e.x, e.y);
+    this.touchX = e.x;
+    this.touchY = e.y;
+  },
+  
+  ontouchend:function(e)
+  {
+    var v = new Vector2d(e.x - this.touchOrigin.x, e.y - this.touchOrigin.y);
+    
+    if(v.force() < 5)
+    {
+      this.scale = this.scale < 6 ? this.scale + 1 : 2;
+      this.scaleX = this.scale / 4;
+      this.scaleY = this.scale / 4;
+    }
+  },
+  
+  ontouchmove:function(e)
+  {
+    this.x += e.x - this.touchX;
+    this.y += e.y - this.touchY;
+    this.touchX = e.x;
+    this.touchY = e.y;
   },
   
   onenterframe:function()
