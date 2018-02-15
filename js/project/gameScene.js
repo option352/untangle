@@ -18,7 +18,7 @@ var gameScene = Class.create(Scene, {
     
     var length = this.nodeArray.length;
     var center = 480;
-    var r = 240;
+    var r = 360;
     
     for (var i = 0; i < length; i++)
     {
@@ -64,8 +64,48 @@ var gameScene = Class.create(Scene, {
   
   onenterframe:function(e)
   {
+    this.moveNode();
     this.checkCross();
     this.render();
+  },
+  
+  moveNode:function()
+  {
+    var length = this.nodeArray.length;
+    var moves = [];
+    for (var i = 0; i < length; i++)
+    //for (var i = 2; i < 3; i++)
+    {
+      var point = this.nodeArray[i];
+      var lines = this.lineArray.filter(function(e, i, a)
+      {
+        return e.startPoint == point || e.endPoint == point;
+      });
+      
+      var vec = new Vector2d(0, 0);
+      for (var j = 0; j < lines.length; j++)
+      {
+        var l = lines[j];
+        var v = l.getVector();
+        if(l.endPoint == point)
+        {
+          v = v.inverse();
+        }
+        v = v.multi(v.force());
+        vec = vec.add(v);
+      }
+      
+      vec = vec.normalize();
+      vec = vec.multi(10);
+      moves.push(vec)
+    }
+    
+    for (var i = 0; i < length; i++)
+    {
+      //this.nodeArray[i].x += moves[i].x;
+      //this.nodeArray[i].y += moves[i].y;
+    }
+
   },
   
   render:function()

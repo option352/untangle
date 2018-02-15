@@ -2,7 +2,7 @@ enchant();
 
 window.onload = function() {
   var core = new Core(DEFS.WIDTH, DEFS.HEIGHT);
-  core.fps = 1;
+  core.fps = 6;
   core.onload = function()
   {
     var firstScene = new createScene();

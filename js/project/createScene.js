@@ -18,7 +18,7 @@ var createScene = Class.create(Scene, {
     this.lineLayer.image = this.lineSurface;
     this.addChild(this.lineLayer);
     
-    for (var i = 0; i < 15; i++)
+    for (var i = 0; i < 25; i++)
     {
       var point = new Vertex();
       var tooNear = false;
