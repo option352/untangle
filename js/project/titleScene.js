@@ -68,7 +68,7 @@ function pickPair(array, num = 2)
   var ret = [];
   var len = a.length;
   var n = num < len ? num : len;
-  console.log(n, num);
+  //console.log(n, num);
   while(n-- > 0)
   {
     var i = Math.random() * len | 0 //ビット演算をはさむことで整数に変換
@@ -76,7 +76,7 @@ function pickPair(array, num = 2)
     --len;
     t[i] = t[len] || a[len]; // 配列末尾の要素を取り出した要素の項番に設定
   }
-  console.log(array, ret);
+  //console.log(array, ret);
   return ret;
   
 }
