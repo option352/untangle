@@ -7,7 +7,29 @@ var scenes =
     var scene = new Scene();
     var label = new Label("main scene");
     scene.addChild(label);
-    scene.backgroundColor = "rgba(255, 230, 0, 1)";
+    scene.backgroundColor = "rgba(192, 192, 192, 1)";
+    
+    scene.deck = new Deck();
+    
+    scene.hand = new Hand();
+    scene.hand.group.x = (960 - 400) / 2;
+    scene.hand.group.y = 800;
+    scene.addChild(scene.hand.group);
+    
+    scene.counter = 0;
+    scene.onenterframe = function()
+      {
+        scene.counter++;
+        if(scene.counter >= 24)
+        {
+          scene.counter = 0;
+          scene.hand.addHand(scene.deck.draw());
+        }
+        if(scene.hand.cards.length > 5)
+        {
+          scene.onenterframe = undefined;
+        }
+      }
     
     return scene;
   },

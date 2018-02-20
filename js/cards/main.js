@@ -2,15 +2,13 @@ enchant();
 
 window.onload = function()
 {
-  var game = new Game(320, 320);
+  var game = new Game(960, 960);
   game.fps = 24;
   game.preload('./img/cards/trump.gif');
   
   game.onload = function()
   {
-    game.replaceScene(scenes.titleScene());
-    cards.init();
-    console.log(cards.deck);
+    game.replaceScene(scenes.mainScene());
   }
   
   game.start();
