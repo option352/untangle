@@ -4,7 +4,7 @@ var DEFS = DEFS || {};
 
 DEFS.CARD = DEFS.CARD || {};
 
-DEFS.CARD.WIDTH = 64;
+DEFS.CARD.WIDTH = 48;
 DEFS.CARD.HEIGHT = 64;
 
 DEFS.CARD.ID = DEFS.CARD.ID || {};
@@ -43,9 +43,10 @@ var Card = Class.create({
     this.sprite = new Sprite(DEFS.CARD.WIDTH, DEFS.CARD.HEIGHT);
     this.bg = new Surface(DEFS.CARD.WIDTH, DEFS.CARD.HEIGHT);
     this.label = new Label(this.toString());
-    this.label.font = "32pt メイリオ";
-    this.label.x = 8;
-    this.label.y = 8;
+    //this.label.font = "32pt メイリオ";
+    this.label.font = "48pt NKS24 Playing Cards";
+    this.label.x = 0;
+    this.label.y = 0;
     this.sprite.image = this.bg;
     this.group.addChild(this.sprite);
     this.group.addChild(this.label);
@@ -54,14 +55,13 @@ var Card = Class.create({
   
   toString:function()
   {
-    if (this.id == DEFS.CARD.ID.JOKER) return "Jo";
-    var number = (this.id % 13) + 1;
-    var suit = (this.id / 13) | 0;
+    if (this.id == DEFS.CARD.ID.JOKER) return "\u002f";
     
-    var ret = "";
-    ret += DEFS.CARD.NUMBER.Strings[number] ? DEFS.CARD.NUMBER.Strings[number] : number;
-    ret += DEFS.CARD.SUIT.Strings[suit] ? DEFS.CARD.SUIT.Strings[suit] : "";
-    return ret;
+    var ret = this.id < 26 ? "\u0041" : "\u0061";
+    ret = ret.charCodeAt(0);
+    ret += this.id < 26 ? this.id : this.id - 26;
+    
+    return String.fromCharCode(ret);
   },
   
   render:function()
@@ -134,6 +134,7 @@ var Hand = Class.create({
     this.cards.push(card);
     this.group.addChild(card.group);
     
+    console.log(card.id, card.toString(), card.toString().charCodeAt(0).toString(16));
     this.render();
   },
   

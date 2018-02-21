@@ -5,7 +5,8 @@ var scenes =
   mainScene: function()
   {
     var scene = new Scene();
-    var label = new Label("main scene");
+    var label = new Label("\u002f\u003f\u004b\u005b");
+    label.font = "120px NKS24 Playing Cards";
     scene.addChild(label);
     scene.backgroundColor = "rgba(192, 192, 192, 1)";
     
@@ -25,7 +26,7 @@ var scenes =
           scene.counter = 0;
           scene.hand.addHand(scene.deck.draw());
         }
-        if(scene.hand.cards.length > 5)
+        if(scene.hand.cards.length >= 5)
         {
           scene.onenterframe = undefined;
         }
