@@ -21,7 +21,7 @@ var scenes =
     scene.onenterframe = function()
       {
         scene.counter++;
-        if(scene.counter >= 24)
+        if(scene.counter >= 6)
         {
           scene.counter = 0;
           scene.hand.addHand(scene.deck.draw());
@@ -29,6 +29,8 @@ var scenes =
         if(scene.hand.cards.length >= 5)
         {
           scene.onenterframe = undefined;
+          var poker = new Poker();
+          console.log(poker.checkHand(scene.hand.cards));
         }
       }
     

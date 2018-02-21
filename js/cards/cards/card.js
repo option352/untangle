@@ -39,18 +39,28 @@ var Card = Class.create({
   initialize:function(id = 0)
   {
     this.id = id;
+    this.isOpen = false;
+    
     this.group = new Group(DEFS.CARD.WIDTH, DEFS.CARD.HEIGHT);
     this.sprite = new Sprite(DEFS.CARD.WIDTH, DEFS.CARD.HEIGHT);
     this.bg = new Surface(DEFS.CARD.WIDTH, DEFS.CARD.HEIGHT);
     this.label = new Label(this.toString());
-    //this.label.font = "32pt ÉÅÉCÉäÉI";
     this.label.font = "48pt NKS24 Playing Cards";
-    this.label.x = 0;
-    this.label.y = 0;
     this.sprite.image = this.bg;
     this.group.addChild(this.sprite);
     this.group.addChild(this.label);
+    
     this.render();
+  },
+  
+  getNumber:function()
+  {
+    return this.id % 13;
+  },
+  
+  getSuit:function()
+  {
+    return (this.id / 13) | 0;
   },
   
   toString:function()
@@ -80,82 +90,4 @@ var Card = Class.create({
     context.fill();
   }
 });
-
-var Deck = Class.create({
-  initialize:function(joker=0)
-  {
-    this.cards = [];
-    for (var i = 0; i < 52 + joker; i++)
-    {
-      this.cards.push(new Card(i));
-    }
-    this.shuffle();
-  },
-  
-  shuffle: function()
-  {
-    for (var i=0; i<10000; i++)
-    {
-      var temp = this.cards.splice(Math.random() * this.cards.length, 1);
-      this.cards.push(temp.pop());
-    }
-  },
-  
-  draw:function()
-  {
-    if (this.cards.length == 0) return;
-    var ret = this.cards.pop();
-    return ret;
-  }
-});
-
-DEFS.HAND = DEFS.HAND || {};
-
-DEFS.HAND.WIDTH  = 400;
-DEFS.HAND.HEIGHT = 80;
-
-var Hand = Class.create({
-  initialize:function()
-  {
-    this.cards = [];
-    this.group = new Group()
-    this.bg = new Sprite(DEFS.HAND.WIDTH, DEFS.HAND.HEIGHT);
-    this.bg_img = new Surface(DEFS.HAND.WIDTH, DEFS.HAND.HEIGHT);
-    
-    this.bg.image = this.bg_img;
-    this.group.addChild(this.bg);
-    var context = this.bg_img.context
-    context.fillStyle = "#ff0000";
-    context.fillRect(0, 0, DEFS.HAND.WIDTH, DEFS.HAND.HEIGHT);
-  },
-  
-  addHand:function(card)
-  {
-    this.cards.push(card);
-    this.group.addChild(card.group);
-    
-    console.log(card.id, card.toString(), card.toString().charCodeAt(0).toString(16));
-    this.render();
-  },
-  
-  useHand:function(index)
-  {
-    var card = this.cards.
-    this.render();
-  },
-  
-  render : function()
-  {
-    var length = this.cards.length;
-    var left = (DEFS.HAND.WIDTH - 40 - (DEFS.CARD.WIDTH * length) - (10 * (length - 1))) / 2;
-    for (var i = 0; i < length; i++)
-    {
-      var card = this.cards[i];
-      card.group.x = (DEFS.CARD.WIDTH + 10) * i + left;
-      card.group.y = 10;
-    }
-  }
-  
-});
-
 
