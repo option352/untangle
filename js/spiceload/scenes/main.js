@@ -7,6 +7,8 @@ var MainScene = Class.create(Scene, {
     this.backgroundColor = "#ffcccc";
     var label = new Label("main scene");
     this.addChild(label);
+    
+    enchant.Core.instance.soundManager.playBgm(1);
   }
 });
 

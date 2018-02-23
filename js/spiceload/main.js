@@ -8,6 +8,10 @@ window.onload = function()
   core.fps = DEFS.FPS;
   //core.preload('./img/cards/trump.gif');
   
+  var sounds = new Sounds(core);
+  
+  core.soundManager = sounds;
+  
   core.onload = function()
   {
     core.replaceScene(new MainScene());
