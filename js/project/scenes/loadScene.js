@@ -64,12 +64,6 @@ var titleScene = Class.create(Scene, {
       //this.nodeArray[i].y = this.nodeArray[i].y + (Math.random() * 11 - 5) | 0;
     }
     this.render();
-    
-  },
-  
-  ontouchend:function(e)
-  {
-    enchant.Core.instance.pushScene(new popScene());
   },
   
   render:function()
