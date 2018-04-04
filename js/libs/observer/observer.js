@@ -12,7 +12,7 @@ var Observer = Class.create( {
     this.observers.push(func);
   },
   
-  removeBlock: function(func)
+  removeObserver: function(func)
   {
     var index = this.observers.indexOf(func);
     if(index >= 0)
