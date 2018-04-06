@@ -17,6 +17,7 @@ var Star = Class.create({
   
   tick:function()
   {
+    if(!this.influence.isProduct) return;
     this.productCount += this.productLevel;
     if(this.productCount > 60)
     {

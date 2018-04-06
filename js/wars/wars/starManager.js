@@ -12,7 +12,7 @@ var StarManager = function()
   {
     for (var j = 0; j < 5; j++)
     {
-      stars.push(new Star( {x: i * 100, y: j * 100} ));
+      stars.push(new Star( {x: i * 100 + 20, y: j * 100 + 20} ));
     }
   }
   
