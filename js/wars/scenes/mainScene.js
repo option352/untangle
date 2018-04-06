@@ -12,7 +12,14 @@ var mainScene = Class.create(Scene, {
     this.staruis.push(ui);
     this.addChild(ui);
     
-    this.render();
+    var pauseButton = new Button(50, 50);
+    pauseButton.moveTo(DEFS.WIDTH - 50, 0);
+    pauseButton.ontouchend = function()
+    {
+      enchant.Core.instance.pushScene(new popScene());
+    }
+    this.addChild(pauseButton);
+    
   },
   
   onenterframe:function()
