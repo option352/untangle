@@ -6,12 +6,10 @@ var StarUI = Class.create(Group, {
   initialize:function(data)
   {
     enchant.Group.call(this);
-    var r = 32;
+    var r = 24;
     var edge = 4;
     
     this._data = data;
-    data.observer.addObserver(this.render);
-    
     
     var bg = new Surface(r * 2, r * 2); 
     this._bg = bg;
@@ -40,9 +38,8 @@ var StarUI = Class.create(Group, {
     
   },
   
-  render:function(object)
+  render:function()
   {
-    console.log(object);
     this._units.text = this._data.unit;
   }
 });
