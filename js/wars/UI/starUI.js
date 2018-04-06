@@ -39,7 +39,22 @@ var StarUI = Class.create(Group, {
   
   render:function()
   {
+    var r = 24;
+    var edge = 4;
+    this._bg.context.beginPath();
+    this._bg.context.fillStyle = "rgb(0, 0, 0)";
+    this._bg.context.arc(r, r, r, 0, Math.PI * 2, true);
+    this._bg.context.fill();
+    this._bg.context.beginPath();
+    this._bg.context.fillStyle = this._data.influence.color;
+    this._bg.context.arc(r, r, r - edge, 0, Math.PI * 2, true);
+    this._bg.context.fill();
+  
     this._units.text = this._data.unit;
-  }
+  },
+  
+  changeInfluence:function(team)
+  {
+  },
 });
 

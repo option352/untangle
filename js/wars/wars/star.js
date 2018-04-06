@@ -17,14 +17,18 @@ var Star = Class.create({
   
   tick:function()
   {
-    if(!this.influence.isProduct) return;
-    this.productCount += this.productLevel;
+    this.productCount += this.influence.isProduct ? this.productLevel : 0;
     if(this.productCount > 60)
     {
       this.productCount = 0;
       this.unit++;
       this.observer.dispatch();
     }
+  },
+  
+  changeInfluence:function(team)
+  {
+    this.influence = team;
   },
   
 });

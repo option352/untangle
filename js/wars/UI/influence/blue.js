@@ -1,6 +1,6 @@
 enchant();
 
-var newtral = Class.create(influence, {
+var BlueTeam = Class.create(influence, {
   initialize:function()
   {
     influence.call(this);

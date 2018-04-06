@@ -17,9 +17,10 @@ var mainScene = Class.create(Scene, {
       this.addChild(ui);
     }
     
-    //var ui = new StarUI(this.stars.getStar(6));
-    //this.staruis.push(ui);
-    //this.addChild(ui);
+    var idx = ((Math.random() * list.length) | 0);
+    console.log(idx);
+    var start = this.stars.getStar(idx);
+    start.changeInfluence(new BlueTeam());
     
     var pauseButton = new Button(50, 50);
     pauseButton.moveTo(DEFS.WIDTH - 50, 0);
