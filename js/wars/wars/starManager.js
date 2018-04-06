@@ -8,16 +8,22 @@ var StarManager = function()
   
   var stars = [];
   
-  for (var i = 0; i < 1; i++)
+  for (var i = 0; i < 5; i++)
   {
-    stars.push(new Star());
+    for (var j = 0; j < 5; j++)
+    {
+      stars.push(new Star( {x: i * 100, y: j * 100} ));
+    }
   }
   
-  accessor.getStar = function(){ return stars[0]; }
-  
-  accessor.render = function(context)
+  accessor.getStar = function(index=0)
   {
-    star.render(context);
+    return stars[index];
+  }
+  
+  accessor.getAllStars = function()
+  {
+    return stars.concat();
   }
   
   accessor.tick = function()

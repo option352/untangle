@@ -34,8 +34,7 @@ var StarUI = Class.create(Group, {
     this._units.y = r / 2;
     this.addChild(this._units);
     
-    console.log(this);
-    
+    this.moveTo(data.x, data.y);
   },
   
   render:function()

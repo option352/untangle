@@ -8,9 +8,18 @@ var mainScene = Class.create(Scene, {
     
     this.stars = StarManager();
     this.staruis = [];
-    var ui = new StarUI(this.stars.getStar());
-    this.staruis.push(ui);
-    this.addChild(ui);
+    
+    var list = this.stars.getAllStars();
+    for (var index in list)
+    {
+      var ui = new StarUI(list[index]);
+      this.staruis.push(ui);
+      this.addChild(ui);
+    }
+    
+    //var ui = new StarUI(this.stars.getStar(6));
+    //this.staruis.push(ui);
+    //this.addChild(ui);
     
     var pauseButton = new Button(50, 50);
     pauseButton.moveTo(DEFS.WIDTH - 50, 0);
