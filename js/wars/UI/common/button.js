@@ -1,7 +1,7 @@
 enchant();
 
 var Button = Class.create(Group, {
-  initialize:function(width=100, height=20)
+  initialize:function(width=100, height=30)
   {
     enchant.Group.call(this);
     
@@ -14,6 +14,16 @@ var Button = Class.create(Group, {
     bgSprite.image = bgSurface;
     
     this.addChild(bgSprite);
+    
+    var label = new Label();
+    this._label = label;
+    label.textAlign = "center";
+    label.text = "button";
+    label.font = "16pt メイリオ ";
+    label.width = width;
+    label.y = Math.max(height / 2 - 16, 0);
+    this.addChild(label);
+    
   },
   
   ontouchstart:function()
@@ -28,6 +38,10 @@ var Button = Class.create(Group, {
     this.bg.context.fillRect(0, 0, this.bg.width, this.bg.height);
   },
   
+  setText:function(text)
+  {
+    this._label.text = text;
+  },
   
 });
 
