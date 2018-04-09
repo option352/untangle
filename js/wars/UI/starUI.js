@@ -11,20 +11,10 @@ var StarUI = Class.create(Group, {
     
     this._data = data;
     
-    var bg = new Surface(r * 2, r * 2); 
-    this._bg = bg;
-    bg.context.beginPath();
-    bg.context.fillStyle = "rgb(0, 0, 0)";
-    bg.context.arc(r, r, r, 0, Math.PI * 2, true);
-    bg.context.fill();
-    bg.context.beginPath();
-    bg.context.fillStyle = this._data.influence.color;
-    bg.context.arc(r, r, r - edge, 0, Math.PI * 2, true);
-    bg.context.fill();
+    var star = this._data.influence.createStar();
     
-    var bgSprite = new Sprite(r * 2, r * 2);
-    bgSprite.image = this._bg;
-    this.addChild(bgSprite);
+    this._bg = star.image;
+    this.addChild(star);
     
     this._units = new Label();
     this._units.textAlign = "center";
@@ -35,21 +25,13 @@ var StarUI = Class.create(Group, {
     this.addChild(this._units);
     
     this.moveTo(data.x, data.y);
+    
+    this.addChild(this._data.influence.createUnit());
   },
   
   render:function()
   {
-    var r = 24;
-    var edge = 4;
-    this._bg.context.beginPath();
-    this._bg.context.fillStyle = "rgb(0, 0, 0)";
-    this._bg.context.arc(r, r, r, 0, Math.PI * 2, true);
-    this._bg.context.fill();
-    this._bg.context.beginPath();
-    this._bg.context.fillStyle = this._data.influence.color;
-    this._bg.context.arc(r, r, r - edge, 0, Math.PI * 2, true);
-    this._bg.context.fill();
-  
+    this._data.influence.renderStar(this._bg);
     this._units.text = this._data.unit;
   },
   
